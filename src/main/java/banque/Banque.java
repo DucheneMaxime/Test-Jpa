@@ -1,9 +1,10 @@
 package banque;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -12,14 +13,21 @@ import javax.persistence.Table;
 @Table(name = "banque")
 public class Banque {
 	@Id
+	@GeneratedValue
 	private Integer id;
 
 	@Column(name = "nom")
 	private String nom;
 
 	@OneToMany(mappedBy = "banque")
-	private Set<Client> clients;
+	private List<Client> clients;
 
-	// @ManyToMany
-	// @JoinTable(name = "compo", joinColumns = @JoinColumn)
+	public Banque() {
+
+	}
+
+	public Banque(String nom) {
+		this.nom = nom;
+	}
+
 }
