@@ -25,7 +25,7 @@ import banque.Virement;
 public class TestJpa {
 	private static EntityManager em;
 
-	private static final Logger LOG = LoggerFactory.getLogger(TestJpa.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(TestJpa.class);
 
 	public static void main(String[] args) {
 		try {
@@ -52,17 +52,17 @@ public class TestJpa {
 
 			// Nouvelle adresse
 			Adresse adresse = new Adresse(3, "rue Edith Piaf", 44000, "Saint-Herblain");
-			LOG.debug("Adresse OK");
+			LOGGER.debug("Adresse OK");
 
 			// Nouvelle banque
 			Banque banque = new Banque("Société Générale");
 			em.persist(banque);
-			LOG.debug("Banque OK");
+			LOGGER.debug("Banque OK");
 
 			// Nouveau client
 			banque.Client client = new banque.Client("Lauret", "Sony", LocalDate.of(1789, 07, 14), adresse, banque);
 			em.persist(client);
-			LOG.debug("Client OK");
+			LOGGER.debug("Client OK");
 			// Set de clients
 			List<banque.Client> setClients = new LinkedList();
 			setClients.add(client);
@@ -70,7 +70,7 @@ public class TestJpa {
 			// Nouveau virement
 			Virement virement = new Virement("moi", LocalDate.now(), 500.00, "because");
 			em.persist(virement);
-			LOG.debug("Virement 1 OK");
+			LOGGER.debug("Virement 1 OK");
 			// Set de virements
 			List<Operation> setVirements = new LinkedList();
 			setVirements.add(virement);
@@ -78,7 +78,7 @@ public class TestJpa {
 			// Second virement
 			Virement virement2 = new Virement("moi", LocalDate.of(2012, 12, 11), 222.22, "parce que");
 			em.persist(virement2);
-			LOG.debug("Virement 2 OK");
+			LOGGER.debug("Virement 2 OK");
 			// Second set de virements
 			List<Operation> setVirements2 = new LinkedList();
 			setVirements2.add(virement2);
@@ -87,14 +87,15 @@ public class TestJpa {
 			Compte assuranceVie = new AssuranceVie("123", 50.2, setVirements, setClients, LocalDate.of(2020, 01, 01),
 					0.5);
 			em.persist(assuranceVie);
-			LOG.debug("Assurance Vie OK");
+			LOGGER.debug("Assurance Vie OK");
 
 			// Nouveau Livret A
 			Compte livretA = new LivretA("666", 0.01, setVirements2, setClients, 1.50);
 			em.persist(livretA);
-			LOG.debug("Livret A OK");
+			LOGGER.debug("Livret A OK");
 
 			et.commit();
+			emf.close();
 
 		} catch (IllegalArgumentException e) {
 		}
